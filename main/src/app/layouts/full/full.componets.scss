@@ -1,0 +1,19 @@
+.wrapper {
+  max-width: 500px;
+  display: flex;
+}
+
+.text-area-element {
+  width: 250px;
+}
+.text-area-element textarea {
+  max-width:100%;
+  box-sizing:border-box;
+}
+.topbar button[mat-icon-button] {
+  color: #334155;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}

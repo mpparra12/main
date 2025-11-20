@@ -1,0 +1,123 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Emisiones / Huella de Carbono</h2>
+
+  <!-- Filtros -->
+  <div class="bg-gray-50 p-4 rounded-xl shadow mb-4 grid grid-cols-1 sm:grid-cols-5 gap-4 items-end">
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Área</label>
+      <select [(ngModel)]="filtroArea" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>Todos</option>
+        <option>Planta Norte</option>
+        <option>Planta Sur</option>
+        <option>Pozo A-101</option>
+        <option>Oleoducto Central</option>
+        <option>Terminal Marítimo</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Tipo de Emisión</label>
+      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>Todos</option>
+        <option>CO₂</option>
+        <option>CH₄</option>
+        <option>N₂O</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Fuente</label>
+      <select [(ngModel)]="filtroFuente" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>Todos</option>
+        <option>Combustión</option>
+        <option>Flaring</option>
+        <option>Transporte</option>
+        <option>Procesos</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Desde fecha</label>
+      <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltros()" class="border rounded p-2 w-full"/>
+    </div>
+    <div class="flex space-x-2">
+      <button (click)="limpiarFiltros()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Limpiar</button>
+      <button (click)="exportarExcel()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📊 Excel</button>
+      <button (click)="exportarPDFConGraficas()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">🧾 PDF</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+<div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+  <div class="bg-blue-100 p-4 rounded-xl text-center">
+    <h3 class="text-gray-700 text-sm">Total emisiones tCO₂e</h3>
+    <p class="text-2xl font-bold text-blue-700">{{ getTotalEmisiones() | number:'1.0-2' }}</p>
+  </div>
+  <div class="bg-red-100 p-4 rounded-xl text-center">
+    <h3 class="text-gray-700 text-sm">CO₂</h3>
+    <p class="text-2xl font-bold text-red-700">{{ getTotalCO2() | number:'1.0-2' }}</p>
+  </div>
+  <div class="bg-yellow-100 p-4 rounded-xl text-center">
+    <h3 class="text-gray-700 text-sm">CH₄</h3>
+    <p class="text-2xl font-bold text-yellow-700">{{ getTotalCH4() | number:'1.0-2' }}</p>
+  </div>
+  <div class="bg-green-100 p-4 rounded-xl text-center">
+    <h3 class="text-gray-700 text-sm">N₂O</h3>
+    <p class="text-2xl font-bold text-green-700">{{ getTotalN2O() | number:'1.0-2' }}</p>
+  </div>
+</div>
+
+  <!-- Gráficas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <apx-chart id="donutChart"
+               [series]="donutChartOptions.series"
+               [chart]="donutChartOptions.chart"
+               [labels]="donutChartOptions.labels"
+              >
+    </apx-chart>
+
+    <apx-chart id="lineChart"
+               [series]="lineChartOptions.series"
+               [chart]="lineChartOptions.chart"
+               [xaxis]="lineChartOptions.xaxis"
+               >
+    </apx-chart>
+  </div>
+
+  <!-- Barra apilada -->
+  <div class="mb-8">
+    <apx-chart id="stackedBarChart"
+               [series]="stackedBarChartOptions.series"
+               [chart]="stackedBarChartOptions.chart"
+               [xaxis]="stackedBarChartOptions.xaxis"
+               >
+    </apx-chart>
+  </div>
+
+  <!-- Mapa -->
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold mb-2 text-gray-700">Mapa de emisiones</h3>
+    <div id="mapaEmisiones" class="w-full h-96 rounded-xl shadow"></div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-4 py-2 text-left">Fecha</th>
+          <th class="px-4 py-2 text-left">Área</th>
+          <th class="px-4 py-2 text-left">Tipo</th>
+          <th class="px-4 py-2 text-left">Fuente</th>
+          <th class="px-4 py-2 text-left">Toneladas tCO₂e</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of registrosFiltrados" class="border-b hover:bg-gray-50">
+          <td class="px-4 py-2">{{ r.fecha }}</td>
+          <td class="px-4 py-2">{{ r.area }}</td>
+          <td class="px-4 py-2">{{ r.tipo }}</td>
+          <td class="px-4 py-2">{{ r.fuente }}</td>
+          <td class="px-4 py-2 font-semibold">{{ r.toneladas }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

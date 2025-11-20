@@ -1,0 +1,149 @@
+<div class="container mx-auto p-6 bg-gradient-to-b from-gray-50 to-white rounded-2xl shadow-xl">
+
+  <!-- Título -->
+  <h2 class="text-3xl font-bold mb-6 text-center text-gray-800 tracking-wide">
+    ⚙️ CAPEX & OPEX Dashboard
+  </h2>
+
+  <!-- Filtros -->
+  <div class="bg-white/80 backdrop-blur-md border border-gray-200 p-5 rounded-2xl shadow-sm mb-8 grid grid-cols-1 sm:grid-cols-5 gap-4 items-end">
+    <div>
+      <label class="block text-xs uppercase font-semibold text-gray-500 mb-1">Area</label>
+      <select [(ngModel)]="filtroArea" (change)="aplicarFiltros()" class="select-input">
+        <option>All</option>
+        <option>Planta Norte</option>
+        <option>Planta Sur</option>
+        <option>Well A-101</option>
+        <option>Central Pipeline</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase font-semibold text-gray-500 mb-1">Type</label>
+      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="select-input">
+        <option>All</option>
+        <option>CAPEX</option>
+        <option>OPEX</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase font-semibold text-gray-500 mb-1">Project</label>
+      <select [(ngModel)]="filtroProyecto" (change)="aplicarFiltros()" class="select-input">
+        <option>All</option>
+        <option>Expansion A</option>
+        <option>Maintenance B</option>
+        <option>Repair C</option>
+        <option>Drilling D</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs uppercase font-semibold text-gray-500 mb-1">From Date</label>
+      <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltros()" class="select-input"/>
+    </div>
+
+    <div class="flex space-x-2 justify-end">
+      <button (click)="limpiarFiltros()" class="btn-action bg-blue-600 hover:bg-blue-700">🧹 Clean</button>
+      <button (click)="exportarExcel()" class="btn-action bg-green-600 hover:bg-green-700">📊 Excel</button>
+      <button (click)="exportarPDFConGraficas()" class="btn-action bg-red-600 hover:bg-red-700">🧾 PDF</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+    <div class="kpi-card border-t-4 border-blue-600">
+      <div class="kpi-icon bg-blue-100 text-blue-600">💰</div>
+      <div>
+        <p class="kpi-title">Total CAPEX</p>
+        <h3 class="kpi-value">{{ getTotalCAPEX() | currency }}</h3>
+      </div>
+    </div>
+
+    <div class="kpi-card border-t-4 border-emerald-600">
+      <div class="kpi-icon bg-emerald-100 text-emerald-600">⚙️</div>
+      <div>
+        <p class="kpi-title">Total OPEX</p>
+        <h3 class="kpi-value">{{ getTotalOPEX() | currency }}</h3>
+      </div>
+    </div>
+
+    <div class="kpi-card border-t-4 border-amber-500">
+      <div class="kpi-icon bg-amber-100 text-amber-600">📈</div>
+      <div>
+        <p class="kpi-title">Planned Amount</p>
+        <h3 class="kpi-value">{{ getMontoPlanificado() | currency }}</h3>
+      </div>
+    </div>
+
+    <div class="kpi-card border-t-4 border-rose-500">
+      <div class="kpi-icon bg-rose-100 text-rose-600">⚠️</div>
+      <div>
+        <p class="kpi-title">Total Deviation</p>
+        <h3 class="kpi-value">{{ getDesviacionTotal() | currency }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+    <div class="chart-card">
+      <h3 class="chart-title">Distribución CAPEX / OPEX</h3>
+      <apx-chart id="donutChart"
+                 [series]="donutChartOptions.series"
+                 [chart]="donutChartOptions.chart"
+                 [labels]="donutChartOptions.labels">
+      </apx-chart>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-title">Tendencia Mensual</h3>
+      <apx-chart id="lineChart"
+                 [series]="lineChartOptions.series"
+                 [chart]="lineChartOptions.chart"
+                 [xaxis]="lineChartOptions.xaxis">
+      </apx-chart>
+    </div>
+  </div>
+
+  <!-- Barra apilada -->
+  <div class="chart-card mb-10">
+    <h3 class="chart-title">Ejecución por Área</h3>
+    <apx-chart id="stackedBarChart"
+               [series]="stackedBarChartOptions.series"
+               [chart]="stackedBarChartOptions.chart"
+               [xaxis]="stackedBarChartOptions.xaxis">
+    </apx-chart>
+  </div>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-2xl shadow-lg border border-gray-100">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+        <tr>
+          <th class="px-4 py-3 text-left">Fecha</th>
+          <th class="px-4 py-3 text-left">Área</th>
+          <th class="px-4 py-3 text-left">Proyecto</th>
+          <th class="px-4 py-3 text-left">Tipo</th>
+          <th class="px-4 py-3 text-left">Monto Plan</th>
+          <th class="px-4 py-3 text-left">Monto Real</th>
+          <th class="px-4 py-3 text-left">Desviación</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of registrosFiltrados" class="border-b hover:bg-blue-50 transition">
+          <td class="px-4 py-2">{{ r.fecha }}</td>
+          <td class="px-4 py-2">{{ r.area }}</td>
+          <td class="px-4 py-2">{{ r.proyecto }}</td>
+          <td class="px-4 py-2">{{ r.tipo }}</td>
+          <td class="px-4 py-2">{{ r.montoPlan | currency }}</td>
+          <td class="px-4 py-2">{{ r.montoReal | currency }}</td>
+          <td class="px-4 py-2 font-semibold" [class.text-red-600]="r.montoReal > r.montoPlan" [class.text-emerald-600]="r.montoReal <= r.montoPlan">
+            {{ r.montoReal - r.montoPlan | currency }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

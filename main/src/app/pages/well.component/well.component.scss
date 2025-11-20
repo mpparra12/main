@@ -1,0 +1,45 @@
+.resumen {
+  margin: 10px 0;
+}
+
+.resumen-botones {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.detalle-cap {
+  display: flex;
+  gap: 15px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.badge.inactivo {
+  opacity: 0.5;
+}
+
+.tabla {
+  width: 100%;
+  margin-top: 15px;
+}
+.tabla-container {
+  flex: 1 1 40%; // la tabla ocupa el 40% restante
+  overflow: auto; // scroll interno si hay muchas filas
+}
+    .fila {
+      display: flex;
+      justify-content: space-between; /* Espacio entre columnas */
+    }
+    .columna {
+      flex: 1; /* Cada columna ocupa el mismo espacio */
+      margin: 0 10px; /* Espaciado entre columnas */
+      padding: 20px;
+      background-color: #f0f0f0;
+      text-align: center;
+    }

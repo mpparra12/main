@@ -1,0 +1,99 @@
+<div class="dashboard-header">
+  <h1>🌎 Dashboard General — Oil & Gas</h1>
+  <mat-form-field appearance="outline" class="campo-select">
+    <mat-label>Field</mat-label>
+    <mat-select [(ngModel)]="selectedCampo">
+      <mat-option *ngFor="let c of campos" [value]="c">{{ c }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div class="kpi-grid">
+  <mat-card *ngFor="let kpi of kpis" class="kpi-card" [ngClass]="kpi.color">
+    <div class="kpi-icon"><mat-icon>{{ kpi.icon }}</mat-icon></div>
+    <div class="kpi-info">
+      <div class="kpi-title">{{ kpi.title }}</div>
+      <div class="kpi-value">{{ kpi.value | number:'1.0-1' }} {{ kpi.unit || '' }}</div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="row">
+ <div class="col-lg-8">
+  <mat-card class="map-card">
+  <h3>🗺️ Map of Wells and Plants (Real Time)</h3>
+  <div id="map"></div>
+</mat-card>
+</div>
+
+  <div class="col-lg-4">
+    <div class="row">
+      <div class="col-12">
+        <app-daily-production-comp></app-daily-production-comp>
+       <!-- <app-total-followers></app-total-followers>-->
+      </div>
+      <div class="col-12">
+        <app-total-income></app-total-income>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <mat-card class="chart-card">
+  <apx-chart
+    *ngIf="tendenciasChart.series"
+    
+    [series]="tendenciasChart.series"
+    [chart]="tendenciasChart.chart || defaultChart"
+    [xaxis]="tendenciasChart.xaxis || {}"
+    [yaxis]="tendenciasChart.yaxis || {}"
+    [stroke]="tendenciasChart.stroke || {}"
+    [dataLabels]="tendenciasChart.dataLabels || {}"
+    [tooltip]="tendenciasChart.tooltip || {}"
+    [grid]="tendenciasChart.grid || {}"
+    [legend]="tendenciasChart.legend || {}"
+    
+  ></apx-chart>
+
+</mat-card>
+   <!--  <app-sales-profit></app-sales-profit>
+   <app-popular-products></app-popular-products>-->
+  </div>
+  <div class="col-lg-4">
+    <mat-card class="alert-card">
+  <h2>🚨 Recent Alerts</h2>
+  <table mat-table [dataSource]="alertas">
+    <ng-container matColumnDef="tipo">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let a">{{ a.tipo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let a">{{ a.fecha }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="severidad">
+      <th mat-header-cell *matHeaderCellDef>Severity</th>
+      <td mat-cell *matCellDef="let a">
+        <span class="alert-badge" [ngClass]="a.severidad">{{ a.severidad }}</span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['tipo','fecha','severidad']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['tipo','fecha','severidad'];"></tr>
+  </table>
+</mat-card>
+<!--
+  <div class="col-12">
+    <app-hse-tracker class="chart" ></app-hse-tracker>
+  </div>
+    <app-earning-reports></app-earning-reports>
+  </div>-->
+
+</div>
+
+
+
+
+

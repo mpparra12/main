@@ -1,0 +1,97 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">🚛 Logística</h2>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-6 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">Inventario total: {{ inventarioTotal  }} bbl</div>
+    <div class="bg-white p-4 rounded shadow">Capacidad: {{ capacidadAlmacenamiento  }} bbl</div>
+    <div class="bg-white p-4 rounded shadow">Camiones activos: {{ camionesActivos }} / {{ camionesProgramados }}</div>
+    <div class="bg-white p-4 rounded shadow">Barcos en tránsito: {{ barcosEnTransito }} / {{ barcosProgramados }}</div>
+    <div class="bg-white p-4 rounded shadow">Demora promedio: {{ demoraPromedio }} h</div>
+  </div>
+
+  <!-- Inventario gráfico -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Inventario por producto</h3>
+    <apx-chart
+      [series]="chartInventario.series"
+      [chart]="chartInventario.chart"
+      [labels]="chartInventario.labels"
+      [plotOptions]="chartInventario.plotOptions"
+      [colors]="chartInventario.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Transporte terrestre -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Transporte terrestre</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Camión</th>
+          <th class="p-2 border">Ruta</th>
+          <th class="p-2 border">Estado</th>
+          <th class="p-2 border">Carga (bbl)</th>
+          <th class="p-2 border">ETA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of camiones" class="border-t">
+          <td class="p-2 border">{{ c.id }}</td>
+          <td class="p-2 border">{{ c.ruta }}</td>
+          <td class="p-2 border">{{ c.estado }}</td>
+          <td class="p-2 border">{{ c.carga  }}</td>
+          <td class="p-2 border">{{ c.eta }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Transporte marítimo -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Transporte marítimo</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Barco</th>
+          <th class="p-2 border">Origen</th>
+          <th class="p-2 border">Destino</th>
+          <th class="p-2 border">Estado</th>
+          <th class="p-2 border">Carga (bbl)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let b of barcos" class="border-t">
+          <td class="p-2 border">{{ b.id }}</td>
+          <td class="p-2 border">{{ b.origen }}</td>
+          <td class="p-2 border">{{ b.destino }}</td>
+          <td class="p-2 border">{{ b.estado }}</td>
+          <td class="p-2 border">{{ b.carga  }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alertas -->
+  <div class="bg-white p-6 rounded shadow">
+    <h3 class="text-lg font-semibold mb-2">Alertas recientes</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Tipo</th>
+          <th class="p-2 border">Severidad</th>
+          <th class="p-2 border">Fecha</th>
+          <th class="p-2 border">Acción recomendada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alertas" class="border-t">
+          <td class="p-2 border">{{ a.tipo }}</td>
+          <td class="p-2 border">{{ a.severidad }}</td>
+          <td class="p-2 border">{{ a.fecha }}</td>
+          <td class="p-2 border">{{ a.accion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

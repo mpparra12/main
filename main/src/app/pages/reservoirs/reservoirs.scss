@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  background-color: #f9fafb;
+}
+
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.text-green-500 {background-color: rgba(31, 247, 3, 0.15);}
+.text-yellow-500 {background-color: rgba(253, 228, 3, 0.15);}
+.text-red-500 {background-color: rgba(247, 7, 7, 0.15);}
+.font-bold{font-weight:bold;}
+ .text-xl{font-size:22px;}
+.kpi-card {
+  padding: 1rem;
+  text-align: center;
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+
+.kpi-title {
+  font-weight: 500;
+  color: #475569;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 0.25rem;
+}
+
+.alert-section {
+  padding: 1rem;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}

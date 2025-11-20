@@ -1,0 +1,90 @@
+ 
+    <div class="dashboard-header">
+      <h2>📊 Dashboard Multi-Pozo</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Well</mat-label>
+        <select matNativeControl [(ngModel)]="selectedPozo" (change)="updateDashboard()">
+          <option *ngFor="let p of pozos" [value]="p">{{ p }}</option>
+        </select>
+      </mat-form-field>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <mat-card *ngFor="let kpi of kpis" class="kpi-card" [ngClass]="kpi.color">
+        <div class="kpi-title">{{ kpi.title }}</div>
+        <div class="kpi-value">{{ kpi.value | number }}</div>
+      </mat-card>
+    </div>
+
+    <div class="row">
+  <div class="col-lg-8">
+    <app-sales-profit></app-sales-profit>
+  </div>
+  <div class="col-lg-4">
+    <div class="row">
+      <div class="col-12">
+        <app-total-followers></app-total-followers>
+      </div>
+      <div class="col-12">
+        <app-total-income></app-total-income>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-8">
+    <app-popular-products></app-popular-products>
+  </div>
+  <div class="col-lg-4">
+    <app-earning-reports></app-earning-reports>
+  </div>
+  <div class="col-12">
+    
+  </div>
+</div>
+    <!-- Gráfico -->
+    <mat-card class="chart-container">
+      <apx-chart
+      *ngIf="productionChart.series"
+      [series]="productionChart.series"
+      [chart]="productionChart.chart || defaultChart"
+      [xaxis]="productionChart.xaxis || {}"
+      [yaxis]="productionChart.yaxis || {}"
+      [title]="productionChart.title  || {}"
+      [stroke]="productionChart.stroke || {}"
+      [dataLabels]="productionChart.dataLabels || {}"
+      [tooltip]="productionChart.tooltip || {}"
+      ></apx-chart>
+    </mat-card>
+
+    <!-- Alertas -->
+    <mat-card class="alert-section">
+      <h3>🚨 Well Alerts {{ selectedPozo }}</h3>
+      <table mat-table [dataSource]="alertas" class="mat-elevation-z2">
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let a">{{ a.tipo }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let a">{{ a.fecha }}</td>
+        </ng-container>
+        <ng-container matColumnDef="severidad">
+          <th mat-header-cell *matHeaderCellDef>Severity</th>
+          <td mat-cell *matCellDef="let a">
+            <span [ngClass]="{
+              'bg-red': a.severidad==='Alta',
+              'bg-yellow': a.severidad==='Media',
+              'bg-green': a.severidad==='Baja'
+            }">{{ a.severidad }}</span>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['tipo','fecha','severidad']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['tipo','fecha','severidad'];"></tr>
+      </table>
+    </mat-card>
+
+
+  <!-- Tabs vacíos para otras secciones -->
+

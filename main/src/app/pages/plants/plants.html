@@ -1,0 +1,84 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">🏭 Plantas</h2>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">Rendimiento promedio: {{ rendimientoPromedio }}%</div>
+    <div class="bg-white p-4 rounded shadow">Disponibilidad equipos: {{ disponibilidadEquipos }}%</div>
+    <div class="bg-white p-4 rounded shadow">Eficiencia global: {{ eficienciaGlobal }}%</div>
+    <div class="bg-white p-4 rounded shadow">Paradas no planificadas: {{ paradasNoPlanificadas }}</div>
+  </div>
+
+  <!-- Producción por planta -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Producción por planta</h3>
+    <apx-chart
+      [series]="chartProduccion.series"
+      [chart]="chartProduccion.chart"
+      [xaxis]="chartProduccion.xaxis"
+      [colors]="chartProduccion.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Disponibilidad de equipos -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Disponibilidad de equipos</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Equipo</th>
+          <th class="p-2 border">Tipo</th>
+          <th class="p-2 border">Estado</th>
+          <th class="p-2 border">Disponibilidad (%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of equipos" class="border-t">
+          <td class="p-2 border">{{ e.id }}</td>
+          <td class="p-2 border">{{ e.tipo }}</td>
+          <td class="p-2 border">{{ e.estado }}</td>
+          <td class="p-2 border">{{ e.disponibilidad }}%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Eficiencia -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Eficiencia</h3>
+    <apx-chart
+      [series]="chartEficiencia.series"
+      [chart]="chartEficiencia.chart"
+      [xaxis]="chartEficiencia.xaxis"
+      [stroke]="chartEficiencia.stroke"
+      [colors]="chartEficiencia.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Alertas -->
+  <div class="bg-white p-6 rounded shadow">
+    <h3 class="text-lg font-semibold mb-2">Alertas y eventos</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Tipo</th>
+          <th class="p-2 border">Planta</th>
+          <th class="p-2 border">Equipo</th>
+          <th class="p-2 border">Severidad</th>
+          <th class="p-2 border">Fecha</th>
+          <th class="p-2 border">Acción recomendada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alertas" class="border-t">
+          <td class="p-2 border">{{ a.tipo }}</td>
+          <td class="p-2 border">{{ a.planta }}</td>
+          <td class="p-2 border">{{ a.equipo }}</td>
+          <td class="p-2 border">{{ a.severidad }}</td>
+          <td class="p-2 border">{{ a.fecha }}</td>
+          <td class="p-2 border">{{ a.accion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

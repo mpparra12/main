@@ -1,0 +1,108 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">🛢️ Oil pipelines / Gas pipelines</h2>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">
+      <p class="text-gray-500">Total capacity</p>
+      <p class="text-xl font-bold">{{ capacidadTotal  }} bbl/d</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <p class="text-gray-500">Current flow</p>
+      <p class="text-xl font-bold text-blue-600">{{ flujoActual  }} bbl/d</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <p class="text-gray-500">Average pressure</p>
+      <p class="text-xl font-bold text-green-600">{{ presionPromedio }} psi</p>
+    </div>
+    <div class="bg-white p-4 rounded shadow">
+      <p class="text-gray-500">Status</p>
+      <p class="text-xl font-bold text-green-500">{{ estado }}</p>
+    </div>
+  </div>
+
+  <!-- Gráficos -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="bg-white p-6 rounded shadow">
+      <h3 class="text-lg font-semibold mb-2">Flow Trend</h3>
+      <apx-chart
+        [series]="chartFlujo.series"
+        [chart]="chartFlujo.chart"
+        [xaxis]="chartFlujo.xaxis"
+        [stroke]="chartFlujo.stroke"
+        [colors]="chartFlujo.colors"
+        [legend]="chartFlujo.legend">
+      </apx-chart>
+    </div>
+
+    <div class="bg-white p-6 rounded shadow flex flex-col items-center">
+      <h3 class="text-lg font-semibold mb-2">Average pressure</h3>
+      <apx-chart
+        [series]="chartPresion.series"
+        [chart]="chartPresion.chart"
+        [plotOptions]="chartPresion.plotOptions"
+        [colors]="chartPresion.colors">
+      </apx-chart>
+    </div>
+
+    <div class="bg-white p-6 rounded shadow flex flex-col items-center">
+      <h3 class="text-lg font-semibold mb-2">Capacity utilization</h3>
+      <apx-chart
+        [series]="chartCapacidad.series"
+        [chart]="chartCapacidad.chart"
+        [plotOptions]="chartCapacidad.plotOptions"
+        [colors]="chartCapacidad.colors">
+      </apx-chart>
+    </div>
+  </div>
+
+  <!-- Tabla de ductos -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Pipelines / Sections</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Pipelines</th>
+          <th class="p-2 border">Sections</th>
+          <th class="p-2 border">Flow (bbl/d)</th>
+          <th class="p-2 border">Pressure (psi)</th>
+          <th class="p-2 border">Ability (bbl/d)</th>
+          <th class="p-2 border">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of ductos" class="border-t">
+          <td class="p-2 border">{{ d.ducto }}</td>
+          <td class="p-2 border">{{ d.tramo }}</td>
+          <td class="p-2 border">{{ d.flujo  }}</td>
+          <td class="p-2 border">{{ d.presion }}</td>
+          <td class="p-2 border">{{ d.capacidad  }}</td>
+          <td class="p-2 border">{{ d.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Alertas -->
+  <div class="bg-white p-6 rounded shadow">
+    <h3 class="text-lg font-semibold mb-2">Alertas recientes</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Tipo</th>
+          <th class="p-2 border">Severidad</th>
+          <th class="p-2 border">Fecha</th>
+          <th class="p-2 border">Acción recomendada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alertas" class="border-t">
+          <td class="p-2 border">{{ a.tipo }}</td>
+          <td class="p-2 border">{{ a.severidad }}</td>
+          <td class="p-2 border">{{ a.fecha }}</td>
+          <td class="p-2 border">{{ a.accion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

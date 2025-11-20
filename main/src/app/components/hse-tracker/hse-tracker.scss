@@ -1,0 +1,234 @@
+//@import "../styles/colors";
+//@import "../styles/font";
+//@import "../styles/variables";
+$yellow: #ffc260;
+$blue: #091a79;
+$light-blue: #798DFE;
+$white-blue: #B1BCFF;
+$blue-white: #F3F5FF;
+$pink: #ff4081;
+$dark-pink: #ff0f60;
+$green: #31C2A0;
+$violet: #9013FE;
+$white: white;
+$dark-grey: #4A4A4A;
+$light-grey: #B9B9B9;
+$grey: #6E6E6E;
+$sky: #c0caff;
+$default: #E0E0E0;
+
+
+$white-35: rgba(255, 255, 255, 0.35);
+$white-50: rgba(255, 255, 255, 0.5);
+$white-70: rgba(255, 255, 255, 0.7);
+$white-80: #FFFFFF80;
+
+$white-gray: rgba(224, 224, 224, 0.5);
+
+$gray-08: rgba(110, 110, 110, 0.8);
+$gray-80: #D8D8D880;
+$gray-06: rgba(110, 110, 110, 0.6);
+$gray-70: rgba(155, 155, 155, 0.7);
+
+$black-08: rgba(0, 0, 0, 0.08);
+$black-04: rgba(0, 0, 0, 0.04);
+$black-12: rgba(0, 0, 0, 0.12);
+
+$pink-15: rgba(255, 92, 147, 0.15);
+$blue-15: rgba(83, 109, 254, 0.15);
+$green-15: rgba(60, 212, 160, 0.15);
+$yellow-15: rgba(255, 194, 96, 0.15);
+$violet-15: rgba(144, 19, 254, 0.15);
+
+$pink-20: rgba(255, 92, 147, 0.2);
+$blue-20: rgba(83, 109, 254, 0.2);
+$green-20: rgba(60, 212, 160, 0.2);
+$yellow-20: rgba(255, 194, 96, 0.25);
+$violet-20: rgba(144, 19, 254, 0.2);
+
+$shadow-white: #E8EAFC;
+$shadow-grey: #B2B2B21A;
+$shadow-dark-grey: #9A9A9A1A;
+
+$background-color: #F6F7FF;
+
+//// font
+$fw-lighter: 400;
+$fw-normal: 500;
+$fw-bold: 600;
+$fw-extra-bold: 700;
+
+
+$fs-xs: 11.2px;
+$fs-small: 14px;
+$fs-normal: 16px;
+$fs-regular: 18px;
+$fs-medium: 21px;
+$fs-large: 24px;
+$fs-xl: 28px;
+$fs-xxl: 38px;
+$fs-xxxl: 42px;
+/////
+/// 
+$extra-small: 576px;
+$small: 576px;
+$medium: 768px;
+$large: 992px;
+$normal: 1024px;
+$extra-large: 1200px;
+$xxl: 1440px;
+
+//== Material Toolbar
+
+$toolbar-title-font-color: $grey;
+$toolbar-button-font-color: $white;
+$toolbar-button-background-color: $pink;
+$toolbar-button-background-color-active: $dark-pink;
+$toolbar-padding: 8px 24px 6px 24px;
+
+//== Material Sidebar Content
+
+$sidebar-content-padding: 36px;
+$sidebar-content-mobile-padding: 16px;
+
+//== Material Tabs
+
+$tabs-header-font-color: $blue;
+$tabs-header-font-color-active: $blue;
+$tabs-ink-bar-color: $blue;
+
+
+//== Apex Chart X axis tooltip
+
+$chart-tooltip-background-color: $blue;
+$chart-tooltip-border-color: $blue;
+$chart-tooltip-font-color: $white;
+
+//== Header
+
+$header-height: 64px;
+
+$header-button-background-color: transparent;
+$header-button-background-color-hover: $black-08;
+$header-button-font-color: $white;
+$header-button-box-shadow: none;
+
+$header-title-font-color: $white;
+
+//== Footer
+
+$footer-height: 48px;
+$footer-link-color: $blue;
+$footer-icon-color: $gray-06;
+$footer-icon-background-color-hover: $black-08;
+
+//== Settings menu element
+
+$settings-button-background-color: $white;
+$settings-button-background-color-hover: $blue;
+$settings-button-color: $light-grey;
+$settings-button-color-hover: $white-35;
+$settings-menu-font-color: $dark-grey;
+$settings-menu-background-color-hover: $blue-white;
+
+
+
+.visits-chart {
+  display: flex;
+  height: 192px;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @media (min-width: 1280px) and (max-width: $xxl) {
+    height: 220px;
+  }
+
+  &__header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: $fw-lighter;
+    margin: 0;
+    line-height: 40px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 75%;
+
+    &-info {
+      align-items: center;
+      display: flex;
+      height: 96px;
+      justify-content: space-between;
+
+      &-title {
+        margin: 0;
+        font-weight: $fw-normal;
+        font-size: $fs-large;
+        line-height: 1.5;
+        letter-spacing: 0.15px;
+        color: $dark-grey;
+      }
+
+      &-chart {
+        margin-left: 16px;
+      }
+    }
+
+    &-stats {
+      display: flex;
+      justify-content: space-between;
+
+      &-title {
+        margin:0;
+        color: $light-grey;
+        font-weight: $fw-lighter;
+        font-size: 12px;
+      }
+
+      &-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      &-data {
+        margin:0;
+        line-height: 1.5;
+        font-weight: $fw-lighter;
+        font-size: $fs-normal;
+        color: $dark-grey;
+      }
+
+      &-icon {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        margin-left: 8px;
+      }
+    }
+  }
+}
+
+.blue {
+  background-color: $blue;
+}
+
+.yellow {
+  background-color: $yellow;
+}
+
+.green {
+  background-color: $green;
+}

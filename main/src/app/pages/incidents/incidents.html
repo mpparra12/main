@@ -1,0 +1,89 @@
+<div class="container mx-auto p-4">
+    <div class="col-12">
+        <app-hse-tracker></app-hse-tracker>       
+    </div>
+  <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Accidentes / Incidentes</h2>
+
+  <!-- Filtros -->
+  <div class="bg-gray-50 p-4 rounded-xl shadow mb-4 grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Tipo</label>
+      <select [(ngModel)]="filtroTipo" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>Todos</option><option>Lesión</option><option>Fuga</option><option>Incendio</option><option>Derrame</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Severidad</label>
+      <select [(ngModel)]="filtroSeveridad" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>Todos</option><option>Leve</option><option>Moderado</option><option>Grave</option>
+      </select>
+    </div>
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Desde fecha</label>
+      <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltros()" class="border rounded p-2 w-full"/>
+    </div>
+    <div class="flex space-x-2">
+      <button (click)="limpiarFiltros()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Limpiar</button>
+      <button (click)="exportarExcel()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📊 Excel</button>
+      <button (click)="exportarPDFConGraficas()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">🧾 PDF</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+    <div class="bg-blue-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Total</h3>
+      <!--<p class="text-2xl font-bold text-blue-700">{{ incidentesFiltrados.length }}</p>-->
+    </div>
+    <div class="bg-red-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Graves</h3>
+     <!-- <p class="text-2xl font-bold text-red-700">{{ incidentesFiltrados.filter(i=>i.severidad==='Grave').length }}</p>-->
+    </div>
+    <div class="bg-yellow-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Moderados</h3>
+     <!-- <p class="text-2xl font-bold text-yellow-700">{{ incidentesFiltrados.filter(i=>i.severidad==='Moderado').length }}</p>-->
+    </div>
+    <div class="bg-green-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Leves</h3>
+      <!--<p class="text-2xl font-bold text-green-700">{{ incidentesFiltrados.filter(i=>i.severidad==='Leve').length }}</p>-->
+    </div>
+  </div>
+
+  <!-- Gráficas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <apx-chart id="donutChart" [series]="donutChartOptions.series" [chart]="donutChartOptions.chart" [labels]="donutChartOptions.labels"></apx-chart>
+ <!--<apx-chart id="donutChart" [series]="donutChartOptions.series" [chart]="donutChartOptions.chart" [labels]="donutChartOptions.labels" [legend]="donutChartOptions.legend" [title]="donutChartOptions.title"></apx-chart>    
+    <apx-chart id="lineChart" [series]="lineChartOptions.series" [chart]="lineChartOptions.chart" [xaxis]="lineChartOptions.xaxis" [title]="lineChartOptions.title"></apx-chart>-->
+    <apx-chart id="lineChart" [series]="lineChartOptions.series" [chart]="lineChartOptions.chart" [xaxis]="lineChartOptions.xaxis"></apx-chart>    
+  </div>
+
+  <!-- Mapa -->
+  <div class="mb-8">
+    <h3 class="text-lg font-semibold mb-2 text-gray-700">Mapa de incidentes</h3>
+    <div id="mapaIncidentes" class="w-full h-96 rounded-xl shadow"></div>
+  </div>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-4 py-2 text-left">Fecha</th>
+          <th class="px-4 py-2 text-left">Ubicación</th>
+          <th class="px-4 py-2 text-left">Tipo</th>
+          <th class="px-4 py-2 text-left">Severidad</th>
+          <th class="px-4 py-2 text-left">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of incidentesFiltrados" class="border-b hover:bg-gray-50">
+          <td class="px-4 py-2">{{ i.fecha }}</td>
+          <td class="px-4 py-2">{{ i.ubicacion }}</td>
+          <td class="px-4 py-2">{{ i.tipo }}</td>
+          <td class="px-4 py-2" [ngClass]="{'text-green-600 font-semibold': i.severidad==='Leve','text-yellow-600 font-semibold': i.severidad==='Moderado','text-red-600 font-semibold': i.severidad==='Grave'}">{{ i.severidad }}</td>
+          <td class="px-4 py-2" [ngClass]="{'text-blue-600': i.estado==='Cerrado','text-orange-600': i.estado==='En investigación','text-red-600': i.estado==='Abierto'}">{{ i.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

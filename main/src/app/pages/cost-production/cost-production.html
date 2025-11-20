@@ -1,0 +1,114 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">
+    Comparativo Costos vs Producción
+  </h2>
+
+  <!-- Filtros -->
+  <div class="bg-gray-50 p-4 rounded-xl shadow mb-4 grid grid-cols-1 sm:grid-cols-5 gap-4 items-end">
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Area</label>
+      <select [(ngModel)]="filtroArea" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>All</option>
+        <option>North Plant</option>
+        <option>South Plant</option>
+        <option>Well A-101</option>
+        <option>Central Pipeline</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Well</label>
+      <select [(ngModel)]="filtroPozo" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>All</option>
+        <option>Well A-101</option>
+        <option>Well B-202</option>
+        <option>Well C-303</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">Project</label>
+      <select [(ngModel)]="filtroProyecto" (change)="aplicarFiltros()" class="border rounded p-2 w-full">
+        <option>All</option>
+        <option>Expansion A</option>
+        <option>Maintenance B</option>
+        <option>Repair C</option>
+        <option>Drilling D</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm text-gray-600 mb-1">From date</label>
+      <input type="date" [(ngModel)]="filtroFecha" (change)="aplicarFiltros()" class="border rounded p-2 w-full"/>
+    </div>
+
+    <div class="flex space-x-2">
+      <button (click)="limpiarFiltros()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Clear</button>
+      <button (click)="exportarExcel()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📊 Excel</button>
+      <button (click)="exportarPDF()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">🧾 PDF</button>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+    <div class="bg-blue-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Producción Total</h3>
+      <p class="text-2xl font-bold text-blue-700">{{ getProduccionTotal()  }}</p> <!-- | number:'1.0-0'-->
+    </div>
+    <div class="bg-red-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Gasto Total</h3>
+      <p class="text-2xl font-bold text-red-700">{{ getGastoTotal()  }}</p>
+    </div>
+    <div class="bg-green-100 p-4 rounded-xl text-center">
+      <h3 class="text-gray-700 text-sm">Costo Unitario / barril</h3>
+      <p class="text-2xl font-bold text-green-700">{{ getCostoUnitario()  }}</p>
+    </div>
+  </div>
+
+  <!-- Gráficas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+    <apx-chart
+      [series]="lineChartOptions.series"
+      [chart]="lineChartOptions.chart"
+      [xaxis]="lineChartOptions.xaxis"
+      >
+    </apx-chart>
+
+    <apx-chart
+      [series]="barChartOptions.series"
+      [chart]="barChartOptions.chart"
+      [xaxis]="barChartOptions.xaxis"
+      >
+    </apx-chart>
+  </div>
+
+  <!-- Tabla -->
+  <div class="overflow-x-auto bg-white rounded-xl shadow">
+    <table class="min-w-full text-sm">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-4 py-2 text-left">Fecha</th>
+          <th class="px-4 py-2 text-left">Área</th>
+          <th class="px-4 py-2 text-left">Pozo</th>
+          <th class="px-4 py-2 text-left">Proyecto</th>
+          <th class="px-4 py-2 text-left">Producción</th>
+          <th class="px-4 py-2 text-left">CAPEX</th>
+          <th class="px-4 py-2 text-left">OPEX</th>
+          <th class="px-4 py-2 text-left">Costo Unitario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of registrosFiltrados" class="border-b hover:bg-gray-50">
+          <td class="px-4 py-2">{{ r.fecha }}</td>
+          <td class="px-4 py-2">{{ r.area }}</td>
+          <td class="px-4 py-2">{{ r.pozo }}</td>
+          <td class="px-4 py-2">{{ r.proyecto }}</td>
+          <td class="px-4 py-2">{{ r.produccion  }}</td>
+          <td class="px-4 py-2">{{ r.capex  }}</td>
+          <td class="px-4 py-2">{{ r.opex  }}</td>
+          <td class="px-4 py-2">{{ (r.capex+r.opex)/r.produccion  }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

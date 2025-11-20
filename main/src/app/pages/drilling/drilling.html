@@ -1,0 +1,84 @@
+
+<div class="container p-4">
+  <h2 class="text-2xl font-bold mb-4">💧 Producción - Campo Norte</h2>
+
+  <!-- === KPIs === -->
+    <div class="kpi-grid">
+      <mat-card  class="kpi-card">
+        <div class="kpi-title">Daily Production</div>
+        <div class="kpi-value">{{ produccionDia }} bbl</div>
+      </mat-card>
+      <mat-card  class="kpi-card">
+        <div class="kpi-title">Daily Gas</div>
+        <div class="kpi-value">{{ gasDia }} Mcf</div>
+      </mat-card>
+      <mat-card  class="kpi-card">
+        <div class="kpi-title">Operational efficiency</div>
+        <div class="kpi-value">{{ eficiencia }}%</div>
+      </mat-card>
+      <mat-card  class="kpi-card">
+        <div class="kpi-title">Active alerts</div>
+        <div class="kpi-value">{{ alertasActivas }}</div>
+      </mat-card>                  
+</div>
+
+
+  <!-- === Producción diaria === -->
+  <div class="bg-white p-6 rounded-lg shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Daily Production Trend</h3>
+    <apx-chart
+      [series]="chartProduccion.series"
+      [chart]="chartProduccion.chart"
+      [xaxis]="chartProduccion.xaxis"
+      [stroke]="chartProduccion.stroke"
+      [colors]="chartProduccion.colors"
+      [legend]="chartProduccion.legend">
+    </apx-chart>
+  </div>
+
+  <!-- === Eficiencia operativa === -->
+  <div class="bg-white p-6 rounded-lg shadow mb-6 flex flex-col items-center">
+    <h3 class="text-lg font-semibold mb-2">Operational Efficiency</h3>
+    <apx-chart
+      [series]="chartEficiencia.series"
+      [chart]="chartEficiencia.chart"
+      [plotOptions]="chartEficiencia.plotOptions"
+      [colors]="chartEficiencia.colors">
+    </apx-chart>
+  </div>
+
+  <!-- === Alertas === -->
+  <div class="bg-white p-6 rounded-lg shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Alert frequency</h3>
+    <apx-chart
+      [series]="chartAlertas.series"
+      [chart]="chartAlertas.chart"
+      [xaxis]="chartAlertas.xaxis"
+      [plotOptions]="chartAlertas.plotOptions"
+      [colors]="chartAlertas.colors">
+    </apx-chart>
+  </div>
+
+  <!-- === Tabla de alertas === -->
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h3 class="text-lg font-semibold mb-2">Recent alerts</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead>
+        <tr class="bg-gray-100 text-left">
+          <th class="p-2 border">Type</th>
+          <th class="p-2 border">Level</th>
+          <th class="p-2 border">Date</th>
+          <th class="p-2 border">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alertas" class="border-t">
+          <td class="p-2 border">{{ a.tipo }}</td>
+          <td class="p-2 border">{{ a.nivel }}</td>
+          <td class="p-2 border">{{ a.fecha }}</td>
+          <td class="p-2 border">{{ a.accion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

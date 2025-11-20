@@ -1,0 +1,84 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">🛢️ Productos</h2>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">Inventario total: {{ inventarioTotal  }} bbl</div>
+    <div class="bg-white p-4 rounded shadow">Producción diaria: {{ produccionDiaria  }} bbl</div>
+    <div class="bg-white p-4 rounded shadow">Ventas/distribution: {{ ventas  }} bbl</div>
+    <div class="bg-white p-4 rounded shadow">Productos críticos: {{ productosCriticos }}</div>
+  </div>
+
+  <!-- Producción por producto -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Producción por producto</h3>
+    <apx-chart
+      [series]="chartProduccion.series"
+      [chart]="chartProduccion.chart"
+      [xaxis]="chartProduccion.xaxis"
+      [colors]="chartProduccion.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Inventario por ubicación -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Inventario por ubicación</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Producto</th>
+          <th class="p-2 border">Ubicación</th>
+          <th class="p-2 border">Stock</th>
+          <th class="p-2 border">Capacidad máxima</th>
+          <th class="p-2 border">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of inventario" class="border-t">
+          <td class="p-2 border">{{ i.producto }}</td>
+          <td class="p-2 border">{{ i.ubicacion }}</td>
+          <td class="p-2 border">{{ i.stock  }}</td>
+          <td class="p-2 border">{{ i.capacidad  }}</td>
+          <td class="p-2 border">{{ i.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Distribución / Ventas -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Distribución / Ventas</h3>
+    <apx-chart
+      [series]="chartDistribucion.series"
+      [chart]="chartDistribucion.chart"
+      [xaxis]="chartDistribucion.xaxis"
+      [stroke]="chartDistribucion.stroke"
+      [colors]="chartDistribucion.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Alertas -->
+  <div class="bg-white p-6 rounded shadow">
+    <h3 class="text-lg font-semibold mb-2">Alertas de productos</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Producto</th>
+          <th class="p-2 border">Ubicación</th>
+          <th class="p-2 border">Stock</th>
+          <th class="p-2 border">Estado</th>
+          <th class="p-2 border">Acción recomendada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alertas" class="border-t">
+          <td class="p-2 border">{{ a.producto }}</td>
+          <td class="p-2 border">{{ a.ubicacion }}</td>
+          <td class="p-2 border">{{ a.stock  }}</td>
+          <td class="p-2 border">{{ a.estado }}</td>
+          <td class="p-2 border">{{ a.accion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+  <div class="fila">
+    <div class="columna"> <app-total-followers></app-total-followers></div>
+    <div class="columna"><app-total-income></app-total-income></div>
+
+    <div class="columna"><app-total-income></app-total-income></div>    
+   <!--   <div class="columna"><app-sales-profit></app-sales-profit></div>-->
+  </div>  
+  
+<!--  <div class="col-lg-4">
+    <div class="row">
+      <div class="col-12">
+        <app-total-followers></app-total-followers>
+      </div>
+      <div class="col-12">
+        <app-total-income></app-total-income>
+      </div>
+    </div>
+  </div>-->
+<div id="map" style="height: 600px;"></div>
+
+<div class="resumen">
+  <div class="resumen-botones">
+    <button mat-stroked-button color="primary" (click)="activarTodasCapas()">Activar todas</button>
+    <button mat-stroked-button color="warn" (click)="desactivarTodasCapas()">Desactivar todas</button>
+  </div>
+
+  <p>{{ resumenTabla }}</p>
+
+  <div class="detalle-cap">
+    <span *ngFor="let c of conteoPorCapa"
+          class="badge"
+          [style.color]="c.color"
+          (click)="toggleCapa(c.origen)"
+          [class.inactivo]="c.activos === 0">
+      ● {{ c.origen | titlecase }}: {{ c.activos }}/{{ c.total }}
+    </span>
+  </div>
+</div>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 tabla">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element" (click)="seleccionarPuntoDesdeTabla(element)">
+      {{ element.nombre }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="origen">
+    <th mat-header-cell *matHeaderCellDef> Origen </th>
+    <td mat-cell *matCellDef="let element">{{ element.origen }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="seleccionarPuntoDesdeTabla(row)">
+  </tr>
+</table>
+<!--📊 1. Resumen de Pozo (Estado Actual)
+
+Nombre / ID del pozo
+
+Ubicación (campo, bloque, coordenadas en mapa GIS)
+
+Estado: Produciendo / En perforación / En mantenimiento / Cerrado
+
+Tipo de pozo: Productor, inyector, exploratorio
+
+Parámetros clave en tiempo real (si tienes integración con SCADA o sensores IoT):
+
+Presión de cabeza
+
+Temperatura
+
+Tasa de flujo (bbl/día o Mcf/día)
+
+Nivel de agua y corte de agua (BSW %)
+
+🔹 Visual: Tarjetas grandes tipo KPI con colores (verde, amarillo, rojo).-->

@@ -1,0 +1,61 @@
+:host {
+  display: block;
+  padding: 1rem;
+  background-color: #f5f7fa;
+  font-family: Roboto, sans-serif;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.kpi-card {
+  padding: 1rem;
+  text-align: center;
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+
+.kpi-title {
+  font-weight: 500;
+  color: #475569;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 0.25rem;
+}
+
+.chart-container {
+  padding: 1rem;
+  border-radius: 12px;
+  background: #ffffff;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.alert-section {
+  padding: 1rem;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+span.bg-red { background-color: #fee2e2; color: #b91c1c; padding: 0.2rem 0.5rem; border-radius: 6px; font-weight:600; }
+span.bg-yellow { background-color: #fef3c7; color: #78350f; padding: 0.2rem 0.5rem; border-radius: 6px; font-weight:600; }
+span.bg-green { background-color: #dcfce7; color: #166534; padding: 0.2rem 0.5rem; border-radius: 6px; font-weight:600; }

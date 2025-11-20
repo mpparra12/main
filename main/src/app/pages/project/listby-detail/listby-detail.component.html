@@ -1,0 +1,194 @@
+<app-menu headerName="Projects by Details"></app-menu>
+
+<div class="ht-ctc ht-ctc-chat ctc-analytics ctc_wp_desktop style-2 ht_ctc_animation no-animations" id="ht-ctc-chat"
+style="position: fixed; bottom: 15px; right: 15px; cursor: pointer; z-index: 99999999;">
+
+</div>
+
+  <div >
+  <!--<div  class="container example-card" with>
+ 
+       Pestaña 1 -->
+   
+        <mat-card class="mat-elevation-z0 outline" >
+
+          <mat-card-content>
+            
+            <button matTooltip=
+            "Hover to display information on right." mat-icon-button color="warm" (click)="AddProject()">
+       
+              <!--  <button mat-icon-button color="primary" (click)="emailSupport(element.map_url)"> -->                    
+                 <mat-icon>add</mat-icon>
+               </button>
+            <button matTooltip=
+            "Hover to display information on right." mat-icon-button color="warm" (click)="exporter.exportTable('csv',{fileName:'address'+'_'+'Date'})">
+       
+              <!--  <button mat-icon-button color="primary" (click)="emailSupport(element.map_url)"> -->                    
+                 <mat-icon>file_copy</mat-icon>
+               </button>
+           
+               <mat-form-field [style.width.%]="30">
+                <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+              </mat-form-field>
+ 
+              <table 
+              [style.width.%]="100"
+              mat-table
+              [dataSource]="dataSource"
+              class="mat-elevation-z8"
+              matSort
+              #empTbSort="matSort"
+              matTableExporter #exporter="matTableExporter"
+              [hiddenColumns]="[7,8,9]"
+            >
+             <!-- <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumnsS">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+                </ng-container>
+             
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsS"></tr>
+
+                <tr mat-row *matRowDef="let emp; columns: displayedColumnsS"></tr>-->
+                <ng-container matColumnDef="ID">
+                  <th mat-header-cell *matHeaderCellDef> ID </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.ID }} </td>
+                </ng-container>
+              
+                <!-- Nombre -->
+                <ng-container matColumnDef="ProjectName">
+                  <th mat-header-cell *matHeaderCellDef> Project Name </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.ProjectName }} </td>
+                </ng-container>
+              
+                <!-- Dirección -->
+                <ng-container matColumnDef="ClientName">
+                  <th mat-header-cell *matHeaderCellDef> Client Name </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.ClientName || 'N/A' }} </td>
+                </ng-container>
+              
+                <!-- Ciudad -->
+                <ng-container matColumnDef="ClientProject">
+                  <th mat-header-cell *matHeaderCellDef> Client Project </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.ClientProject || 'N/A' }} </td>
+                </ng-container>
+
+                <!-- Ciudad | currency:'USD':'symbol':'1.2-2' -->
+                <ng-container matColumnDef="Agreement">
+                  <th mat-header-cell *matHeaderCellDef> Agreement </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.Agreement || 'N/A' }} </td>
+                </ng-container>
+              
+                <!-- Estado -->
+                <ng-container matColumnDef="BridgeDistrict">
+                  <th mat-header-cell *matHeaderCellDef> Bridge District </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.BridgeDistrict || 'N/A' }} </td>
+                </ng-container>
+              
+                <!-- Código Postal -->
+                <ng-container matColumnDef="ProjectCSJContractNo">
+                  <th mat-header-cell *matHeaderCellDef> Project CSJ Contract No </th>
+                  <td mat-cell *matCellDef="let element"> {{ element.ProjectCSJContractNo || 'N/A' }} </td>
+                </ng-container>
+              
+                <ng-container matColumnDef="ProjectCost">
+                    <th mat-header-cell *matHeaderCellDef> Project Cost </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.ProjectCost | currency:'USD':'symbol':'1.2-2'  }} </td>
+                  </ng-container>     
+
+                  <ng-container matColumnDef="SegmentBridge">
+                    <th mat-header-cell *matHeaderCellDef> Segment Bridge </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.SegmentBridge || 'N/A' }} </td>
+                  </ng-container>    
+
+                  <ng-container matColumnDef="City">
+                    <th mat-header-cell *matHeaderCellDef> City </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.City || 'N/A' }} </td>
+                  </ng-container>
+                
+                  <ng-container matColumnDef="County">
+                      <th mat-header-cell *matHeaderCellDef> County </th>
+                      <td mat-cell *matCellDef="let element"> {{ element.County || 'N/A' }} </td>
+                    </ng-container>     
+  
+                    <ng-container matColumnDef="State">
+                      <th mat-header-cell *matHeaderCellDef> State </th>
+                      <td mat-cell *matCellDef="let element"> {{ element.State || 'N/A' }} </td>
+                    </ng-container>                     
+
+                <ng-container matColumnDef="Actions">
+                  <th mat-header-cell *matHeaderCellDef> Actions </th>
+                  <td mat-cell *matCellDef="let element"> 
+                    
+                    <button mat-icon-button color="Accent" (click)="edit(element)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="Accent" (click)="delete(element)">
+                        <mat-icon>delete</mat-icon>
+                      </button> 
+                    <!--
+                    <button mat-icon-button color="warn">
+                      <mat-icon>delete</mat-icon>
+                    </button>-->
+                  </td>
+                </ng-container>
+              
+                <!-- Encabezado de la fila -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              
+                <!-- Filas -->
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+              </table>
+ 
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+              <!-- Campo de selección (input select) -->
+              <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+                          <mat-form-field appearance="fill">
+                              <mat-label>Select option</mat-label>
+                              <mat-select formControlName="address">
+                                <mat-option value="opcion1">Option 1</mat-option>
+                                <mat-option value="opcion2">Option 2</mat-option>
+                                <mat-option value="opcion3">Option 3</mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="myForm.get('address').hasError('required')">This field is required</mat-error>
+                            </mat-form-field>
+                      </div> -->
+              <!-- <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+                          <mat-label>Owner Details</mat-label>
+                          <button mat-raised-button color="primary" (click)="addRow()">Add Row</button> -->
+              <!-- Campo de correo electrónico (input email) -->
+              <!-- <mat-form-field appearance="fill">
+                              <input matInput type="email" formControlName="mailingAddress" placeholder="Correo electrónico">
+                              <mat-error *ngIf="myForm.get('mailingAddress').hasError('required')">This field is required</mat-error>
+                              <mat-error *ngIf="myForm.get('mailingAddress').hasError('email')">Invalid email</mat-error>
+                          </mat-form-field> -->
+              <!-- </div> -->
+             
+ 
+              <!-- Botón de enviar -->
+ 
+            </form>
+            
+          </mat-card-content>
+        </mat-card>
+     
+  
+ 
+ 
+</div>
+  <footer id="main-footer">
+ 
+ 
+ 
+    <div id="footer-bottom">
+      <div class="container clearfix">
+    <ul class="et-social-icons">
+   
+    <li class="et-social-icon et-social-instagram">
+    <a href="#" class="icon">
+   
+    </a>
+    </li>
+   
+    </ul>         </div>
+    </div>
+    </footer>

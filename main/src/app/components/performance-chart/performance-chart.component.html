@@ -1,0 +1,44 @@
+<mat-card class="performance-chart">
+  <mat-card-title class="performance-chart__header">
+    <p class="performance-chart__header-title">Production Performance</p>
+
+  </mat-card-title>
+
+  <mat-card-content class="performance-chart__content">
+    <div class="performance-chart__content-header">
+      <div class="performance-chart__content-header-item">
+        <div
+          class="performance-chart__content-header-item-icon"
+
+        >
+      <!--          [ngClass]="{
+            'blue' : currentTheme === 'blue',
+            'pink' : currentTheme === 'pink',
+            'green' : currentTheme === 'green'
+          }"-->
+      </div>
+        <span class="performance-chart__content-header-item-text">Oil</span>
+      </div>
+      <div class="performance-chart__content-header-item">
+        <div class="performance-chart__content-header-item-icon yellow"></div>
+        <span class="performance-chart__content-header-item-text">Gas</span>
+      </div>
+    </div>
+
+    <div class="performance-chart__progress-wrapper">
+      <h6 class="performance-chart__progress-title">Oil</h6>
+      <mat-progress-bar
+        class="performance-chart__progress-bar"
+        mode="determinate"
+        [value]=performanceChartData.integration
+      ></mat-progress-bar>
+      <h6 class="performance-chart__progress-title">Gas</h6>
+      <mat-progress-bar
+        class="performance-chart__progress-bar"
+        mode="determinate"
+        color="accent"
+        [value]=performanceChartData.sdk
+      ></mat-progress-bar>
+    </div>
+  </mat-card-content>
+</mat-card>

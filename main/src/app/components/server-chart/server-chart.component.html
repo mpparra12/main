@@ -1,0 +1,35 @@
+<mat-card class="server-chart">
+  <mat-card-title class="server-chart__header">
+    <p class="server-chart__header-title">Server Overview</p>
+
+  </mat-card-title>
+
+<mat-card-content class="server-chart__content">
+  @for (chart of charts; track chart; let i = $index) {
+    <div class="server-chart__content-item">
+      <div class="server-chart__content-item-text-wrapper">
+        <p class="server-chart__content-item-text">
+          {{ serverDataTitles[i] }}
+        </p>
+      </div>
+
+      <apx-chart
+  style="width: 30%;"
+  [series]="chart.series || []"
+  [chart]="chart.chart || defaultChart"
+  [xaxis]="chart.xaxis || {}"
+  [stroke]="chart.stroke || {}"
+  [dataLabels]="chart.dataLabels || {}"
+  [yaxis]="chart.yaxis || {}"
+  [labels]="chart.labels || []"
+  [legend]="chart.legend || {}"
+  [grid]="chart.grid || {}"
+  [tooltip]="chart.tooltip || {}"
+  [colors]="chart.colors || []"
+  [fill]="chart.fill || {}"
+      ></apx-chart>
+    </div>
+  } @empty {
+    <p class="text-gray-500">No hay gráficos disponibles.</p>
+  }
+</mat-card-content>

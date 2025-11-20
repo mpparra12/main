@@ -1,0 +1,61 @@
+<div class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-[80vh] flex flex-col items-center justify-center p-8">
+  <mat-card class="w-full max-w-2xl shadow-xl rounded-2xl p-6 bg-white">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
+        <span>📤</span> Importar Datos de Pozos
+      </h2>
+      <button mat-icon-button color="primary" (click)="openHelp()">
+        <mat-icon>help_outline</mat-icon>
+      </button>
+    </div>
+
+    <p class="text-gray-600 mb-4">
+      Sube un archivo <strong>.CSV</strong> o <strong>.TXT</strong> con la información de pozos.
+      Asegúrate de que las columnas coincidan con el formato esperado:
+    </p>
+
+    <div class="bg-gray-50 border border-dashed rounded-lg p-4 mb-4 text-sm text-gray-700">
+      <pre>PozoID,Nombre,Campo,ProduccionDiaria,Presion,Temperatura,FechaActualizacion</pre>
+    </div>
+
+    <div
+      class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center hover:bg-gray-50 transition cursor-pointer"
+      (drop)="onDrop($event)" (dragover)="onDragOver($event)"
+    >
+      <input
+        type="file"
+        id="fileInput"
+        class="hidden"
+        (change)="onFileSelected($event)"
+        accept=".csv,.txt"
+      />
+      <label for="fileInput" class="cursor-pointer flex flex-col items-center">
+        <mat-icon class="text-blue-600 mb-2" style="font-size: 40px;">upload</mat-icon>
+        <span class="text-gray-600">
+          {{ selectedFile ? selectedFile.name : 'Arrastra o selecciona un archivo' }}
+        </span>
+      </label>
+    </div>
+
+    <div class="mt-6 flex justify-end space-x-3">
+      <button mat-stroked-button color="warn" (click)="cancelUpload()">Cancelar</button>
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="uploadFile()"
+        [disabled]="!selectedFile || loading"
+      >
+        {{ loading ? 'Subiendo...' : 'Subir Archivo' }}
+      </button>
+    </div>
+
+    <div *ngIf="uploadMessage" class="mt-6 text-center">
+      <p [ngClass]="{
+        'text-green-600': uploadSuccess,
+        'text-red-600': !uploadSuccess
+      }" class="font-semibold text-lg">
+        {{ uploadMessage }}
+      </p>
+    </div>
+  </mat-card>
+</div>

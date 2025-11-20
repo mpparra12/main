@@ -1,0 +1,90 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">⚗️ Calidad</h2>
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white p-4 rounded shadow">Muestras analizadas: {{ muestrasAnalizadas }}</div>
+    <div class="bg-white p-4 rounded shadow">Cumplimiento: {{ cumplimiento }}%</div>
+    <div class="bg-white p-4 rounded shadow">No conformidades: {{ noConformidades }}</div>
+    <div class="bg-white p-4 rounded shadow">Última actualización: {{ ultimaActualizacion }}</div>
+  </div>
+
+  <!-- Parámetros de laboratorio -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Parámetros de laboratorio</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Producto</th>
+          <th class="p-2 border">Densidad</th>
+          <th class="p-2 border">Azufre (%)</th>
+          <th class="p-2 border">Octanaje/Cetano</th>
+          <th class="p-2 border">Viscosidad</th>
+          <th class="p-2 border">Cumple</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of parametros" class="border-t">
+          <td class="p-2 border">{{ p.producto }}</td>
+          <td class="p-2 border">{{ p.densidad }}</td>
+          <td class="p-2 border">{{ p.azufre }}</td>
+          <td class="p-2 border">{{ p.octanaje }}</td>
+          <td class="p-2 border">{{ p.viscosidad }}</td>
+          <!--<td class="p-2 border font-bold" [ngClass]="p.cumple ? 'text-green-600' : 'text-red-600'">
+            {{ p.cumple ? '✅' : '❌' }}
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Cumplimiento por estándar -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Cumplimiento por estándar</h3>
+    <apx-chart
+      [series]="chartEstandares.series"
+      [chart]="chartEstandares.chart"
+      [labels]="chartEstandares.labels"
+      [colors]="chartEstandares.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Histórico de azufre -->
+  <div class="bg-white p-6 rounded shadow mb-6">
+    <h3 class="text-lg font-semibold mb-2">Histórico de azufre (%)</h3>
+    <apx-chart
+      [series]="chartHistorico.series"
+      [chart]="chartHistorico.chart"
+      [xaxis]="chartHistorico.xaxis"
+      [stroke]="chartHistorico.stroke"
+      [colors]="chartHistorico.colors">
+    </apx-chart>
+  </div>
+
+  <!-- Alertas -->
+  <div class="bg-white p-6 rounded shadow">
+    <h3 class="text-lg font-semibold mb-2">Alertas de calidad</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Fecha</th>
+          <th class="p-2 border">Producto</th>
+          <th class="p-2 border">Parámetro</th>
+          <th class="p-2 border">Valor</th>
+          <th class="p-2 border">Límite</th>
+          <th class="p-2 border">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of alertas" class="border-t">
+          <td class="p-2 border">{{ a.fecha }}</td>
+          <td class="p-2 border">{{ a.producto }}</td>
+          <td class="p-2 border">{{ a.parametro }}</td>
+          <td class="p-2 border text-red-600">{{ a.valor }}</td>
+          <td class="p-2 border">{{ a.limite }}</td>
+          <td class="p-2 border">{{ a.accion }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

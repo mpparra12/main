@@ -1,0 +1,94 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h2 class="text-2xl font-bold mb-4">🛢️ Reservorios - Campo Norte</h2>
+
+      <!-- KPIs -->
+
+
+  <!-- KPIs -->
+    <div class="kpi-grid">
+      <mat-card  class="kpi-card">
+        <div class="kpi-title">Original Volume</div>
+        <div class="kpi-value">{{ volumenOriginal }}</div>
+      </mat-card>
+            <mat-card  class="kpi-card">
+        <div class="kpi-title">Recovered</div>
+        <div class="kpi-value">{{ recuperado }}%</div>
+      </mat-card>
+      <mat-card  class="kpi-card">
+        <div class="kpi-title">Current pressure</div>
+        <div class="kpi-value">{{ presionActual }} psi</div>
+      </mat-card>
+            <mat-card  class="kpi-card">
+        <div class="kpi-title">Integrity</div>
+        
+       
+     <p
+        class="text-xl font-bold"
+        
+        [ngClass]="{
+          'text-green-500': integridad === 'Alta',
+          'text-yellow-500': integridad === 'Media',
+          'text-red-500': integridad === 'Baja'
+        }"
+      >
+        {{ integridad }}
+      </p>
+      </mat-card>      
+    </div>
+
+
+  
+  </div>
+
+  <!-- Gráficos -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h3 class="text-lg font-semibold mb-2">Pressure Trend</h3>
+      <apx-chart
+        [series]="chartPresion.series"
+        [chart]="chartPresion.chart"
+        [xaxis]="chartPresion.xaxis"
+        [stroke]="chartPresion.stroke"
+        [colors]="chartPresion.colors"
+        [legend]="chartPresion.legend">
+      </apx-chart>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h3 class="text-lg font-semibold mb-2">Volume Balance</h3>
+      <apx-chart
+        [series]="chartVolumen.series"
+        [chart]="chartVolumen.chart"
+        [plotOptions]="chartVolumen.plotOptions"
+        [xaxis]="chartVolumen.xaxis"
+        [colors]="chartVolumen.colors"
+        [legend]="chartVolumen.legend">
+      </apx-chart>
+    </div>
+
+
+  <!-- Tabla de pozos -->
+  <div class="alert-section">
+    <h3 class="text-lg font-semibold mb-2">Associated Wells</h3>
+    <table class="min-w-full border border-gray-300 rounded-md">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="p-2 border">Well</th>
+          <th class="p-2 border">Type</th>
+          <th class="p-2 border">Bottom Pressure (psi)</th>
+          <th class="p-2 border">Caudal (bpd)</th>
+          <th class="p-2 border">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pozos" class="border-t">
+          <td class="p-2 border">{{ p.nombre }}</td>
+          <td class="p-2 border">{{ p.tipo }}</td>
+          <td class="p-2 border">{{ p.presion }}</td>
+          <td class="p-2 border">{{ p.caudal }}</td>
+          <td class="p-2 border">{{ p.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
